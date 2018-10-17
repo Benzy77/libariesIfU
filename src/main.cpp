@@ -19,6 +19,6 @@ using namespace std;
 
 int main()
 {
-	cout << "hello memoryAllocatotr.yu" << endl;
+	cout << "Hello memory" << endl;
 	return 0;
 }

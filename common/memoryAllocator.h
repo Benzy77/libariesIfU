@@ -15,6 +15,18 @@
 #ifndef MEMORY_ALLOCATOR_H
 #define MEMORY_ALLOCATOR_H
 
+#include <sys/resource.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/resource.h>
+#include <unistd.h>
+
+#define DEFAULT_ALLOC_SIZE 16;
+
 namespace Csp
 {
 
@@ -22,10 +34,10 @@ class memoryAlloc
 {
 public:
 	memoryAlloc();
-    void *malloc(size_t size);
+    void *malloc(int size);
 
 private:
-    size_t size;
+    int size;
 };
 
 };

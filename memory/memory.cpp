@@ -13,14 +13,13 @@
 *******************************************************************************/
 
 #include <sys/resource.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <sys/time.h>
 #include <errno.h>
-#include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/resource.h>
+
+
 #include "../common/memoryAllocator.h"
 
 namespace Csp
@@ -37,8 +36,7 @@ using namespace std;
 *******************************************************************************/
 memoryAlloc::memoryAlloc()
 {
-	size = 16;
-	cout << "hello memoryAlloc." << endl;
+	size = DEFAULT_ALLOC_SIZE;
 }
 
 /*******************************************************************************
@@ -49,7 +47,7 @@ memoryAlloc::memoryAlloc()
   Return:   none
   Others:   none
 *******************************************************************************/
-void *memoryAlloc::malloc(size_t size)
+void *memoryAlloc::malloc(int size)
 {
 	void *block;
 	block = sbrk(size);
