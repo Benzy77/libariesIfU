@@ -29,19 +29,31 @@
 
 namespace Csp
 {
+/*******************************************************************************
+  Function:  template memoryAlloc
+  Description: template memoryAlloc.
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
 
-class memoryAlloc
+template <typename newType> class memoryAlloc
 {
 public:
 	memoryAlloc();
-    void *malloc(int size);
+    void *malloc(newType size);
+
+    newType getType();
+    void setType(newType newValueType);
 
 private:
-    int size;
+    newType type;
+    size_t size;
 };
 
 };
-
 /* end of namespace Csp */
+
 #endif/* MEMORY_ALLOCATOR_H */
 /* end of file*/

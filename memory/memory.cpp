@@ -1,5 +1,5 @@
 /*******************************************************************************
-*  Copyleft (C), 2018,
+*  Copyleft (C), 2018
 *  FileName:      memory.cpp
 *  Author:        benqiang.yu
 *  Version :      1.0
@@ -11,15 +11,6 @@
 *  Description:
 *  Main memory.
 *******************************************************************************/
-
-#include <sys/resource.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/resource.h>
-
-
 #include "../common/memoryAllocator.h"
 
 namespace Csp
@@ -34,7 +25,8 @@ using namespace std;
   Return:   none
   Others:   none
 *******************************************************************************/
-memoryAlloc::memoryAlloc()
+template <typename newType>
+memoryAlloc<newType>::memoryAlloc()
 {
 	size = DEFAULT_ALLOC_SIZE;
 }
@@ -47,13 +39,42 @@ memoryAlloc::memoryAlloc()
   Return:   none
   Others:   none
 *******************************************************************************/
-void *memoryAlloc::malloc(int size)
+template <typename newType>
+void* memoryAlloc<newType>::malloc(newType size)
 {
 	void *block;
 	block = sbrk(size);
 	if (block == (void*) -1)
 		return NULL;
 	return block;
+}
+
+/*******************************************************************************
+  Function:  memoryAlloc::getType
+  Description: get Type
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+template <typename newType>
+newType memoryAlloc<newType>::getType()
+{
+	return type;
+}
+
+/*******************************************************************************
+  Function:  memoryAlloc::getType
+  Description: get Type
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+template <typename newType>
+void memoryAlloc<newType>::setType(newType newValueType)
+{
+	type = newValueType;
 }
 
 }
