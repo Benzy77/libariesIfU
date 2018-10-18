@@ -1,16 +1,3 @@
-Memory_allocator
-===========
-
-memory_allocator is a simple memory allocator.
-
-Features
---------
-1.It will use C++ template. 
-- 
-
-
-
-
-
-
-
+# Operating system
+We build CodeCompass under Linux. Currently, we are supporting Ubuntu 16.04 LTS.
+It is recommended to use a 64-bit operating system.
