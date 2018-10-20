@@ -1,12 +1,12 @@
 /*******************************************************************************
 *  Copyleft (C), 2018,
 *  FileName:      commonType.h
-*  Author:        benqiang.yu
+*  Author:        Ben.D
 *  Version :      1.0
 *  Date:          2018-10-15
 *  History:
 *      <author>       <time>        <version >      <desc>
-*    benqiang.yu      2018-10-15        1.0           create
+*        Ben.D      2018-10-15        1.0           create
 *
 *  Description:   Assert. and commonType creat.
 *  This is a creat a new  common type for this project.
@@ -21,9 +21,9 @@ typedef int                Int32;
 typedef unsigned int       U32;
 typedef long long          Int64;
 
-#define COMMONTYPE_STATUS_SUCCESS      (0)
-#define COMMONTYPE_STATUS_ERROR        (-1)
-#define COMMONTYPE_STATUS_ARG_INVALID  (-2)
+#define ALLOC_STATUS_SUCCESS      (0)
+#define ALLOC_STATUS_ERROR        (-1)
+#define ALLOC_STATUS_ARG_INVALID  (-2)
 
 
 #endif/* COMMON_TYPE_DEFIN_H */

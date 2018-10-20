@@ -1,12 +1,12 @@
 /*******************************************************************************
 *  Copyleft (C), 2018,
 *  FileName:      memory_allocator.cpp
-*  Author:        benqiang.yu
+*  Author:        Ben.D
 *  Version :      1.0
 *  Date:          2018-10-15
 *  History:
 *      <author>       <time>        <version >      <desc>
-*    benqiang.yu      2018-10-15        1.0           create
+*        Ben.D      2018-10-15        1.0           create
 *
 *  Description:
 *  Main memory.
