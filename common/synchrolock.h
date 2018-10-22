@@ -58,9 +58,9 @@ class SynchrolockIfU
 public:
 	SynchrolockIfU(){}
     virtual ~SynchrolockIfU(){}
-    virtual Int32  take(Int32 timeout) = 0;  //pure function as an interface.
-    virtual Int32  give() = 0;
-    virtual SemId  getId() = 0;
+    virtual Int32  activeTakeLock(Int32 timeout) = 0;  //pure function as an interface.
+    virtual Int32  activeUnlock() = 0;
+    virtual SemId  getSemId() = 0;
     virtual Int32  getSemInfo(S_SemInfo& semInfo) = 0;
 };
 
@@ -70,9 +70,9 @@ public:
 	Mutex();
 	Mutex(const char* name);
     virtual ~Mutex();
-    virtual Int32  take(Int32 timeout = WAIT_FOREVER);
-    virtual Int32  give();
-    virtual SemId  getId();
+    virtual Int32  activeTakeLock(Int32 timeout = WAIT_FOREVER);
+    virtual Int32  activeUnlock();
+    virtual SemId  getSemId();
     virtual Int32  getSemInfo(S_SemInfo& semInfo);
 private:
 	S_SemInfo _sMutexInfo;
@@ -87,6 +87,7 @@ public:
 private:
     Mutex* _pMutex;
 };
+
 
 }
 
