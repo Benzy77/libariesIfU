@@ -25,6 +25,5 @@ typedef long long          Int64;
 #define ALLOC_STATUS_ERROR        (-1)
 #define ALLOC_STATUS_ARG_INVALID  (-2)
 
-
 #endif/* COMMON_TYPE_DEFIN_H */
 /* end of file*/

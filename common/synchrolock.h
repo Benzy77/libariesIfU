@@ -10,6 +10,8 @@
 *
 *  Description:
 *  This is synchrolock for base library. with poxis.
+*  why do encapsulation base libary
+*  because  some base API will change to. you will need to change many point in your repo
 *  synchroloc.h .
 *******************************************************************************/
 #ifndef SYNCHROLOCK_H
@@ -24,7 +26,13 @@
 #include "commonType.h"
 
 
+#ifndef WAIT_FOREVER
 #define WAIT_FOREVER -1
+#endif
+
+#ifndef NO_WAIT
+#define NO_WAIT 0
+#endif
 
 typedef pthread_t ThreadId;
 
