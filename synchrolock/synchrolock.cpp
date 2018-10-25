@@ -195,4 +195,37 @@ Int32 Mutex::getSemInfo(S_SemInfo& semInfo)
 	return APP_STATUS_SUCCESS;
 }
 
+/*******************************************************************************
+  Function:  MutexLocker::MutexLocker
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+MutexLocker::MutexLocker(Mutex* pMutex)
+:_pMutex(pMutex)
+{
+	if(_pMutex)
+	{
+		_pMutex->activeTakeLock();
+	}
+}
+
+/*******************************************************************************
+  Function:  MutexLocker::~MutexLocker
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+MutexLocker::~MutexLocker()
+{
+	if(_pMutex)
+	{
+		_pMutex->activeUnlock();
+	}
+}
+
 }

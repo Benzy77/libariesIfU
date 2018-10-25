@@ -86,15 +86,15 @@ private:
 	S_SemInfo _sMutexInfo;
 };
 
-
-class ScopedLocker
+class MutexLocker
 {
 public:
-	ScopedLocker(Mutex* pMutex);
-    ~ScopedLocker();
+	MutexLocker(Mutex* pMutex);
+    ~MutexLocker();
 private:
     Mutex* _pMutex;
 };
+
 
 
 }

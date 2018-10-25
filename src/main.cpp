@@ -10,9 +10,7 @@
 *
 *  Description:
 *  Main memory.
-*
 *******************************************************************************/
-
 #include <iostream>
 #include "../common/memoryAllocator.h"
 using namespace std;
