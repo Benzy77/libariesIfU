@@ -1,6 +1,6 @@
 /*******************************************************************************
 *  Copyleft (C), 2018,
-*  FileName:      posixThread.cpp
+*  FileName:      posixThread.h
 *  Author:        Ben.D
 *  Version :      1.0
 *  Date:          2018-10-15
@@ -9,7 +9,7 @@
 *        Ben.D      2018-10-27        1.0           create
 *
 *  Description:  map to manage thread.
-*  Main Thread .
+*  Linux Thread.
 *******************************************************************************/
 #ifndef POSIX_THREAD_H_
 #define POSIX_THREAD_H_
