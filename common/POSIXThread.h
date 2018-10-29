@@ -38,10 +38,10 @@ class posixThreadtask
 public:
 	    posixThreadtask(const char* name, Int32 priority, Int32 stackSize);
 		virtual ~posixThreadtask();
+		Int32   activateThreadtask();
 	    Int32   setPriority(Int32 priority);
 	    Int32   getPriority(Int32& pPriority);
 	    threadTaskId getThreadID();
-
 	    const char* getThreadName();
 	    Int32 getThreadInfo(S_TaskInfo& taskInfo);
 	    Int32 cancel();

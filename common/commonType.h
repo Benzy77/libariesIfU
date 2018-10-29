@@ -21,9 +21,9 @@ typedef int                Int32;
 typedef unsigned int       U32;
 typedef long long          Int64;
 
-#define ALLOC_STATUS_SUCCESS      (0)
-#define ALLOC_STATUS_ERROR        (-1)
-#define ALLOC_STATUS_ARG_INVALID  (-2)
+#define APP_STATUS_SUCCESS      (0)
+#define APP_STATUS_ERROR        (-1)
+#define APP_STATUS_ARG_INVALID  (-2)
 
 #endif/* COMMON_TYPE_DEFIN_H */
 /* end of file*/
