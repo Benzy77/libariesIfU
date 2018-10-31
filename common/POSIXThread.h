@@ -64,11 +64,11 @@ public:
 	static threadTaskManager* getInstance();
 	~threadTaskManager();
 	Int32 dump();
-	Int32 addTaskInfo(S_threadTaskInfo* pTaskInfo);
-	Int32 removeTaskInfo(threadTaskId id);
-	Int32 getTaskInfo(threadTaskId id, S_threadTaskInfo& taskInfo);
+	Int32 addThreadTaskInfo(S_threadTaskInfo* pTaskInfo);
+	Int32 removeThreadTaskInfo(threadTaskId id);
+	Int32 getThreadTaskInfo(threadTaskId id, S_threadTaskInfo& taskInfo);
 private:
-	TaskManager();
+	threadTaskManager();
 private:
 //	ReadWriteLock _rwLock;
 	static threadTaskManager* _pInstance;
@@ -76,6 +76,5 @@ private:
 };
 
 }
-
 #endif	/* POSIX_THREAD_H_*/
 /* end of file */
