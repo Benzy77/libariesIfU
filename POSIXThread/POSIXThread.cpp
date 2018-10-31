@@ -88,7 +88,7 @@ Int32  posixThreadtask::activateThreadtask()
     	return APP_STATUS_ERROR;
     }
     pthread_attr_destroy(&attr);
-    _bActive = true;            //Thread has created successfully.
+    _bActive = true;               //Thread has created successfully.
     _sthreadInfo.pid = getNLPid();
 
 	return APP_STATUS_SUCCESS;
@@ -169,7 +169,15 @@ Int32 posixThreadtask::getThreadInfo(S_threadTaskInfo& taskInfo)
     return APP_STATUS_SUCCESS;
 }
 
-Int32 cancel()
+/*******************************************************************************
+  Function:    cancel()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+Int32 posixThreadtask::cancel()
 {
 	if(!_bActive)
 	{
@@ -189,4 +197,21 @@ Int32 cancel()
 	return ret;
 }
 
+/*******************************************************************************
+  Function:    waitThreadTaskForExit()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+Int32 posixThreadtask::waitThreadTaskForExit()
+{
+	if(_bActive)
+	{
+		_bActive = false;
+		return pthread_join(_sTaskInfo.id, NULL);
+	}
+	return APP_STATUS_ERROR;
+}
 
