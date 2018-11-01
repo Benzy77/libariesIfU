@@ -95,7 +95,19 @@ private:
     Mutex* _pMutex;
 };
 
-
+class ReadWriteLock
+{
+public:
+	ReadWriteLock(const char* name);
+    virtual ~ReadWriteLock();
+    virtual Int32 takeRLock(Int32 timeout = WAIT_FOREVER);
+    virtual Int32 takeWLock(Int32 timeout = WAIT_FOREVER);
+    virtual Int32 give();
+    virtual SemId  getId();
+    virtual Int32 getSemInfo(S_SemInfo& sRWLockInfo);
+private:
+	S_SemInfo _sRWLockInfo;
+};
 
 }
 

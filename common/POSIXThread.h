@@ -63,14 +63,14 @@ class threadTaskManager
 public:
 	static threadTaskManager* getInstance();
 	~threadTaskManager();
-	Int32 dump();
+	Int32 showAllTaskInfo();
 	Int32 addThreadTaskInfo(S_threadTaskInfo* pTaskInfo);
 	Int32 removeThreadTaskInfo(threadTaskId id);
 	Int32 getThreadTaskInfo(threadTaskId id, S_threadTaskInfo& taskInfo);
 private:
 	threadTaskManager();
 private:
-//	ReadWriteLock _rwLock;
+	ReadWriteLock _rwLock;
 	static threadTaskManager* _pInstance;
 	std::map<threadTaskId, S_threadTaskInfo*> _threadTaskManagerInfoMap;
 };

@@ -214,4 +214,136 @@ Int32 posixThreadtask::waitThreadTaskForExit()
 	}
 	return APP_STATUS_ERROR;
 }
+/****************************posixThreadtask  end*******************************/
 
+/*******************************************************************************
+  Function:    threadTaskManager()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+threadTaskManager::threadTaskManager()
+:_rwLock("threadTaskManager")
+{
+
+}
+
+/*******************************************************************************
+  Function:    threadTaskManager()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+threadTaskManager:: ~threadTaskManager()
+{
+	_pInstance = NULL;
+}
+
+/*******************************************************************************
+  Function:    showAllTaskInfo()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+Int32 threadTaskManager::showAllTaskInfo()
+{
+	int res = _rwLock.takeRLock(WAIT_FOREVER);
+	if(-1 == res)
+	{
+		printf("showAllTaskInfo::getrdLock error:\n");
+		return APP_STATUS_ERROR;
+	}
+
+	std::map<TaskId, S_TaskInfo*>::iterator iter = _taskInfoMap.begin();
+
+	for( ; iter != _taskInfoMap.end(); iter++)
+	{
+		printf("Task %d info:\n", (Uint32)iter->first);
+		printf("{\n");
+		printf("TaskName %s\n", iter->second->name.c_str());
+		printf("creator %d \n", (Uint32)iter->second->creator);
+		printf("priority %d \n", (Uint32)iter->second->priority);
+		printf("stackSize %d \n", (Uint32)iter->second->stackSize);
+		printf("}\n");
+	}
+
+    _rwLock.give();
+
+	return APP_STATUS_SUCCESS;
+}
+
+/*******************************************************************************
+  Function:    addThreadTaskInfo()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+Int32 threadTaskManager::addThreadTaskInfo(S_threadTaskInfo* pTaskInfo)
+{
+
+	CHECK_POINTER_VALID(pTaskInfo);
+
+	int res =  _rwLock.takeWLock(WAIT_FOREVER);
+	if(-1 == res)
+	{
+		printf("addTaskInfo::getwrLock error:\n");
+		return APP_STATUS_ERROR;
+	}
+
+	std::map<TaskId, S_TaskInfo*>::const_iterator iter= _taskInfoMap.find(pTaskInfo->id);
+	if(iter != _taskInfoMap.end())
+	{
+		printf("task id %d is exist in TaskManager!!!\n",(Uint32)pTaskInfo->id);
+		_rwLock.give();
+		return APP_STATUS_ERROR;
+	}
+
+	if(!_taskInfoMap.insert(std::pair<TaskId, S_TaskInfo*>(pTaskInfo->id, pTaskInfo)).second)
+	{
+		printf("TaskManager add task id %d info error!!!\n",(Uint32)pTaskInfo->id);
+		_rwLock.give();
+		return APP_STATUS_ERROR;
+	}
+
+	_rwLock.give();
+	return APP_STATUS_SUCCESS;
+}
+
+/*******************************************************************************
+  Function:    removeThreadTaskInfo()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+Int32 threadTaskManager::removeThreadTaskInfo(threadTaskId id)
+{
+	int res = _rwLock.takeWLock(WAIT_FOREVER);
+	if(-1 == res)
+	{
+		printf("removeTaskInfo::getwrLock error:\n");
+		return APP_STATUS_ERROR;
+	}
+	std::map<TaskId, S_TaskInfo*>::const_iterator iter= _taskInfoMap.find(id);
+	if(iter == _taskInfoMap.end())
+	{
+		printf("task id %d isn't exist in TaskManager!!!\n",(Uint32)id);
+		_rwLock.give();
+		return APP_STATUS_ERROR;
+	}
+
+	_taskInfoMap.erase(iter->first);
+
+	_rwLock.give();
+
+	return APP_STATUS_SUCCESS;
+}
