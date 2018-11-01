@@ -14,6 +14,9 @@
 
 #include"../common/POSIXThread.h"
 
+usning namespace std;
+
+namespace Csp{
 /*******************************************************************************
   Function:    posixThreadtask()
   Description: constructor
@@ -347,3 +350,40 @@ Int32 threadTaskManager::removeThreadTaskInfo(threadTaskId id)
 
 	return APP_STATUS_SUCCESS;
 }
+
+/*******************************************************************************
+  Function:    getThreadTaskInfo()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+Int32 threadTaskManager::getTaskInfo(threadTaskId id, S_threadTaskInfo& taskInfo)
+{
+	int res = _rwLock.takeRLock(WAIT_FOREVER);
+	if(-1 == res)
+	{
+		BL_LOG_DEBUG("removeTaskInfo::getwrLock error:\n");
+		return APP_STATUS_ERROR;
+	}
+	map<TaskId, S_TaskInfo*>::const_iterator iter= _taskInfoMap.find(id);
+	if(iter == _taskInfoMap.end())
+	{
+		 _rwLock.give();
+		return APP_STATUS_ERROR;
+	}
+
+	memcpy(&taskInfo, (iter->second), sizeof(S_TaskInfo));
+	taskInfo.name = iter->second->name;
+	taskInfo.creator = iter->second->creator;
+	taskInfo.id = iter->second->id;
+	taskInfo.pid = iter->second->pid;
+	taskInfo.priority = iter->second->priority;
+	taskInfo.stackSize = iter->second->stackSize;
+	_rwLock.give();
+	return APP_STATUS_SUCCESS;
+}
+/*****************************************TaskManager  end**************************************/
+
+}/* end of namespace */
