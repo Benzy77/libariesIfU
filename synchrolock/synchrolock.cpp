@@ -228,4 +228,84 @@ MutexLocker::~MutexLocker()
 	}
 }
 
+/*******************************************************************************
+  Function:  ReadWriteLock::ReadWriteLock(const char* name)
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+ReadWriteLock::ReadWriteLock(const char* name)
+{
+	  int errNo;
+	  _sRWLockInfo.creator = pthread_self();
+	  _sRWLockInfo.name = name;
+	  if((errNo = pthread_rwlock_init(&_sRWLockInfo.id.rwLock, NULL)) != 0)
+	  {
+		  printf("Error, pthread_rwlock_init()failed! errNo = %s\n", strerror(errNo));
+	  }
+}
+
+/*******************************************************************************
+  Function:  ReadWriteLock::~ReadWriteLock()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+ReadWriteLock::~ReadWriteLock()
+{
+	  int errNo;
+	  if((errNo = pthread_rwlock_destroy(&_sRWLockInfo.id.rwLock)) != 0)
+	  {
+		  printf("Error, pthread_rwlock_destroy()failed! errNo = %s\n", strerror(errNo));
+	  }
+}
+
+/*******************************************************************************
+  Function:  ReadWriteLock::takeRLock()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+ReadWriteLock::takeRLock(Int32 timeout)
+{
+	int errNo = APP_STATUS_ERROR;
+
+	switch(timeout)
+	{
+	case NO_WAIT:
+		if((errNo = pthread_rwlock_tryrdlock(&_sRWLockInfo.id.rwLock)) != 0)
+		{
+			if(errNo != EBUSY)
+			{
+				printf("Error, pthread_rwlock_tryrdlock()failed! errNo = %s\n", strerror(errNo));
+			}
+			errNo = APP_STATUS_ERROR;
+		}
+		break;
+	case WAIT_FOREVER:
+		if((errNo = pthread_rwlock_rdlock(&_sRWLockInfo.id.rwLock)) != 0)
+		{
+			printf("Error, pthread_rwlock_rdlock()failed! errNo = %s\n", strerror(errNo));
+		}
+		break;
+	default:
+		printf("ReadWriteLock::takeRLock(timeout)failed, timeout should be NO_WAIT or WAIT_FOREVER!\n");
+		break;
+	}
+	return errNo;
+
+
+
+}
+
+
+
+
+
 }
