@@ -300,12 +300,89 @@ ReadWriteLock::takeRLock(Int32 timeout)
 	}
 	return errNo;
 
-
-
 }
 
+/*******************************************************************************
+  Function:  ReadWriteLock::takeWLock()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+ReadWriteLock::takeWLock(Int32 timeout)
+{
+	int errNo = APP_STATUS_ERROR;
 
+	switch(timeout)
+	{
+	case NO_WAIT:
+		if((errNo = pthread_rwlock_trywrlock(&_sRWLockInfo.id.rwLock)) != 0)
+		{
+			if(errNo != EBUSY)
+			{
+				printf("Error, pthread_rwlock_tryrdlock()failed! errNo = %s\n", strerror(errNo));
+			}
+			errNo = APP_STATUS_ERROR;
+		}
+		break;
+	case WAIT_FOREVER:
+		if((errNo = pthread_rwlock_wrlock(&_sRWLockInfo.id.rwLock)) != 0)
+		{
+			printf("Error, pthread_rwlock_rdlock()failed! errNo = %s\n", strerror(errNo));
+		}
+		break;
+	default:
+		printf("ReadWriteLock::takeRLock(timeout)failed, timeout should be NO_WAIT or WAIT_FOREVER!\n");
+		break;
+	}
+	return errNo;
+}
 
+/*******************************************************************************
+  Function:  ReadWriteLock::ReadWriteUnlock()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+Int32 ReadWriteLock::ReadWriteUnlock()
+{
+	int errNo;
+	if((errNo = pthread_rwlock_unlock(&_sRWLockInfo.id.rwLock)) != 0)
+	{
+		BL_LOG_ERROR("Error, pthread_rwlock_unlock()failed! errNo = %s\n", strerror(errNo));
+		return APP_STATUS_ERROR;
+	}
+	return APP_STATUS_SUCCESS;
+}
 
+/*******************************************************************************
+  Function:  ReadWriteLock::ReadWriteUnlock()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+SemId ReadWriteLock::getId()
+{
+	return _sRWLockInfo.id;
+}
+
+/*******************************************************************************
+  Function:  ReadWriteLock::getSemInfo()
+  Description:
+  Input:    none
+  Output:   none
+  Return:   none
+  Others:   none
+*******************************************************************************/
+Int32 ReadWriteLock::getSemInfo(S_SemInfo& sRWLockInfo)
+{
+	sRWLockInfo = _sRWLockInfo;
+	return APP_STATUS_SUCCESS;
+}
 
 }

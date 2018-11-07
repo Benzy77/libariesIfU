@@ -102,7 +102,7 @@ public:
      ~ReadWriteLock();
      Int32 takeRLock(Int32 timeout = WAIT_FOREVER);
      Int32 takeWLock(Int32 timeout = WAIT_FOREVER);
-     Int32 give();
+     Int32 ReadWriteUnlock();
      SemId getId();
      Int32 getSemInfo(S_SemInfo& sRWLockInfo);
 private:
